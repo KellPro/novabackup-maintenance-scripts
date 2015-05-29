@@ -1,3 +1,7 @@
+# Repository Specific #
+#######################
+configuration.bat
+
 # OS generated files #
 ######################
 .DS_Store
