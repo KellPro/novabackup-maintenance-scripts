@@ -15,7 +15,7 @@ IF EXIST configuration.bat (
 SET /P "kdrClientId=KDR Client ID: "
 IF [%kdrClientId%] == [] (
 	ECHO Please enter a valid KDR Client ID.
-	goto getKdrClientId
+	GOTO getKdrClientId
 )
 
 :getBackupPath
@@ -25,7 +25,7 @@ IF [%backupPath%] == [] (
 )
 IF NOT EXIST !backupPath! (
 	ECHO The backup path you entered could not be found on this computer.
-	goto getBackupPath
+	GOTO getBackupPath
 )
 
 :getBackupDays
