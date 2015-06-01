@@ -3,10 +3,11 @@ SETLOCAL EnableDelayedExpansion
 
 IF EXIST configuration.bat (
 	CALL configuration.bat
+	ECHO.
 	ECHO - Current configuration -
 	ECHO KDR Client ID: !kdrClientId!
 	ECHO Backup Path: !backupPath!
-	ECHO Maximum Days of Backups: !backupDays!
+	ECHO Maximum Days Of Backups: !backupDays!
 	ECHO -
 	ECHO.
 )

@@ -5,6 +5,18 @@ SET "updatePackageFolder=novabackup-maintenance-scripts-master"
 SET vdataLocations="C:\kdr\vdata" "D:\kdr\vdata"
 SET services="Backup Client Agent Service" "swprv" "nsService" "VSS" "SQLBrowser" "SQLWriter"
 
+IF EXIST configuration.bat (
+	CALL configuration.bat
+	SET backupPath=!backupPath:"=!
+	ECHO.
+	ECHO - Current configuration -
+	ECHO KDR Client ID: !kdrClientId!
+	ECHO Backup Path: !backupPath!
+	ECHO Maximum Days Of Backups: !backupDays!
+	ECHO -
+	ECHO.
+)
+
 REM ### Update Scripts ###
 IF NOT [%1] == [no-update] (
 	curl -o update.zip -L -k %updatePackage%
@@ -28,4 +40,19 @@ FOR %%f IN (%vdataLocations%) DO (
 REM ### Start Services ###
 FOR %%s IN (%services%) DO (
 	net start %%s
+)
+
+REM ### Erase Old Backups ###
+IF EXIST "%backupPath%" (
+	SET fileCount=0
+	FOR /D %%f IN ("!backupPath!\nsbackup-*") DO (
+		SET /A fileCount+=1
+	)
+	FOR /D %%f IN ("%backupPath%\nsbackup-*") DO (
+		IF !fileCount! GEQ !backupDays! (
+			ECHO Erasing old backup: %%f
+			RD /S /Q "%%f"
+		)
+		SET /A fileCount-=1
+	)
 )
