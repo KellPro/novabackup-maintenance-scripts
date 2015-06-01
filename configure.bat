@@ -15,7 +15,7 @@ IF "%kdrClientId%" == "" (
 :getBackupPath
 SET /P backupPath=Backup Path (X:\): || SET backupPath=X:\
 SET backupPath=%backupPath:"=%
-IF NOT EXIST %backupPath% (
+IF NOT EXIST "%backupPath%" (
 	ECHO The backup path you entered could not be found on this computer.
 	GOTO getBackupPath
 )
