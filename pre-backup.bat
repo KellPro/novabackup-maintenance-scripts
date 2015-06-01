@@ -1,21 +1,15 @@
 @ECHO OFF
 SETLOCAL EnableDelayedExpansion
-SET "updatePackage=https://github.com/gillsonkell/novabackup-maintenance-scripts/archive/master.zip"
-SET "updatePackageFolder=novabackup-maintenance-scripts-master"
+SET updatePackage=https://github.com/gillsonkell/novabackup-maintenance-scripts/archive/master.zip
+SET updatePackageFolder=novabackup-maintenance-scripts-master
 SET vdataLocations="C:\kdr\vdata" "D:\kdr\vdata"
 SET services="Backup Client Agent Service" "swprv" "nsService" "VSS" "SQLBrowser" "SQLWriter"
 
 IF EXIST configuration.bat (
-	CALL configuration.bat
-	SET backupPath=!backupPath:"=!
-	IF NOT [%1] == [no-update] (
-		ECHO.
-		ECHO - Current configuration -
-		ECHO KDR Client ID: !kdrClientId!
-		ECHO Backup Path: !backupPath!
-		ECHO Maximum Days Of Backups: !backupDays!
-		ECHO -
-		ECHO.
+	IF [%1] == [no-update] (
+		CALL configuration.bat
+	) ELSE (
+		CALL configuration.bat show-message
 	)
 )
 
@@ -47,11 +41,11 @@ FOR %%s IN (%services%) DO (
 REM ### Erase Old Backups ###
 IF EXIST "%backupPath%" (
 	SET fileCount=0
-	FOR /D %%f IN ("!backupPath!\nsbackup-*") DO (
+	FOR /D %%f IN ("%backupPath%\nsbackup-*") DO (
 		SET /A fileCount+=1
 	)
 	FOR /D %%f IN ("%backupPath%\nsbackup-*") DO (
-		IF !fileCount! GEQ !backupDays! (
+		IF !fileCount! GEQ %backupDays% (
 			ECHO Erasing old backup: %%f
 			RD /S /Q "%%f"
 		)
