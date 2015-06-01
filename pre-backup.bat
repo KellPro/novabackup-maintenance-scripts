@@ -3,6 +3,7 @@ SETLOCAL EnableDelayedExpansion
 SET "updatePackage=https://github.com/gillsonkell/novabackup-maintenance-scripts/archive/master.zip"
 SET "updatePackageFolder=novabackup-maintenance-scripts-master"
 SET vdataLocations="C:\kdr\vdata" "D:\kdr\vdata"
+SET services="Backup Client Agent Service" "swprv" "nsService" "VSS" "SQLBrowser" "SQLWriter"
 
 REM ### Update Scripts ###
 IF NOT [%1] == [no-update] (
@@ -22,4 +23,9 @@ FOR %%f IN (%vdataLocations%) DO (
 		RD /S /Q %%f
 		MD %%f
 	)
+)
+
+REM ### Start Services ###
+FOR %%s IN (%services%) DO (
+	net start %%s
 )
