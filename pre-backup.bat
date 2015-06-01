@@ -5,7 +5,7 @@ SET "updatePackageFolder=novabackup-maintenance-scripts-master"
 
 REM ### Update Scripts ###
 IF NOT [%1] == [no-update] (
-	curl -o update.zip -L %updatePackage%
+	curl -o update.zip -L -k %updatePackage%
 	7z x update.zip
 	XCOPY .\%updatePackageFolder%\* .\ /C /Q /S /E /H /Y
     RMDIR /S /Q %updatePackageFolder%

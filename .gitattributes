@@ -1,0 +1,2 @@
+# Prevent CRLF to LF newline conversion.
+* -text
