@@ -6,33 +6,30 @@ IF EXIST configuration.bat (
 )
 
 :getKdrClientId
-SET /P kdrClientId=KDR Client ID: 
-IF [%kdrClientId%] == [] (
+SET /P kdrClientId=KDR Client ID: || SET kdrClientId=
+IF "%kdrClientId%" == "" (
 	ECHO Please enter a valid KDR Client ID.
 	GOTO getKdrClientId
 )
 
 :getBackupPath
-SET /P backupPath=Backup Path (X:\): 
-IF [%backupPath%] == [] (
-	SET backupPath=X:\
-)
+SET /P backupPath=Backup Path (X:\): || SET backupPath=X:\
+SET backupPath=%backupPath:"=%
 IF NOT EXIST %backupPath% (
 	ECHO The backup path you entered could not be found on this computer.
 	GOTO getBackupPath
 )
-SET backupPath=%backupPath:"=%
 
 :getBackupDays
-SET /P backupDays=Maximum days of backups (5): 
-IF [%backupDays%] == [] (
+SET /P backupDays=Maximum days of backups (5): || SET backupDays=
+IF "%backupDays%" == "" (
 	SET backupDays=5
 )
 
 > configuration.bat ECHO SET kdrClientId=%kdrClientId%
 >> configuration.bat ECHO SET backupPath=%backupPath%
 >> configuration.bat ECHO SET backupDays=%backupDays%
->> configuration.bat ECHO IF [%%1] == [show-message] (
+>> configuration.bat ECHO IF "%%1" == "show-message" (
 >> configuration.bat ECHO ECHO.
 >> configuration.bat ECHO ECHO - Current configuration -
 >> configuration.bat ECHO ECHO KDR Client ID: %%kdrClientId%%

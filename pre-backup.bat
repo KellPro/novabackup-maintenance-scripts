@@ -6,7 +6,7 @@ SET vdataLocations="C:\kdr\vdata" "D:\kdr\vdata"
 SET services="Backup Client Agent Service" "swprv" "nsService" "VSS" "SQLBrowser" "SQLWriter"
 
 IF EXIST configuration.bat (
-	IF [%1] == [no-update] (
+	IF "%1" == "no-update" (
 		CALL configuration.bat
 	) ELSE (
 		CALL configuration.bat show-message
@@ -14,7 +14,7 @@ IF EXIST configuration.bat (
 )
 
 REM ### Update Scripts ###
-IF NOT [%1] == [no-update] (
+IF NOT "%1" == "no-update" (
 	curl -o update.zip -L -k %updatePackage%
 	7z x update.zip
 	XCOPY .\%updatePackageFolder%\* .\ /C /Q /S /E /H /Y
