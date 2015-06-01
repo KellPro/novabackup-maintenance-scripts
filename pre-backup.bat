@@ -5,7 +5,7 @@ SET "updatePackageFolder=novabackup-maintenance-scripts-master"
 SET vdataLocations="C:\kdr\vdata" "D:\kdr\vdata"
 SET services="Backup Client Agent Service" "swprv" "nsService" "VSS" "SQLBrowser" "SQLWriter"
 
-IF EXIST configuration.bat (
+IF EXIST configuration.bat IF [%1] == [no-update] (
 	CALL configuration.bat
 	SET backupPath=!backupPath:"=!
 	ECHO.
