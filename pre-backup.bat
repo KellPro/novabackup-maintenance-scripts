@@ -5,16 +5,18 @@ SET "updatePackageFolder=novabackup-maintenance-scripts-master"
 SET vdataLocations="C:\kdr\vdata" "D:\kdr\vdata"
 SET services="Backup Client Agent Service" "swprv" "nsService" "VSS" "SQLBrowser" "SQLWriter"
 
-IF EXIST configuration.bat IF [%1] == [no-update] (
+IF EXIST configuration.bat (
 	CALL configuration.bat
 	SET backupPath=!backupPath:"=!
-	ECHO.
-	ECHO - Current configuration -
-	ECHO KDR Client ID: !kdrClientId!
-	ECHO Backup Path: !backupPath!
-	ECHO Maximum Days Of Backups: !backupDays!
-	ECHO -
-	ECHO.
+	IF NOT [%1] == [no-update] (
+		ECHO.
+		ECHO - Current configuration -
+		ECHO KDR Client ID: !kdrClientId!
+		ECHO Backup Path: !backupPath!
+		ECHO Maximum Days Of Backups: !backupDays!
+		ECHO -
+		ECHO.
+	)
 )
 
 REM ### Update Scripts ###
