@@ -16,7 +16,7 @@ IF EXIST configuration.bat (
 REM ### Update Scripts ###
 IF NOT "%1" == "no-update" (
 	curl -o update.zip -L -k %updatePackage%
-	7z x update.zip
+	unzip update.zip
 	XCOPY .\%updatePackageFolder%\* .\ /C /Q /S /E /H /Y
     RD /S /Q %updatePackageFolder%
     DEL update.zip
