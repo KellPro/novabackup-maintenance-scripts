@@ -1,6 +1,6 @@
 @ECHO OFF
 SETLOCAL EnableDelayedExpansion
-SET updatePackage=https://github.com/gillsonkell/novabackup-maintenance-scripts/archive/master.zip
+SET updatePackage=https://github.com/KellPro/novabackup-maintenance-scripts/archive/live.zip
 SET updatePackageDirectory=novabackup-maintenance-scripts-master
 SET vdataLocations="C:\kdr\vdata" "D:\kdr\vdata"
 SET services="Backup Client Agent Service" "swprv" "nsService" "VSS" "SQLBrowser" "SQLWriter"
