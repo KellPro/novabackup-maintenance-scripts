@@ -1,6 +1,7 @@
 @ECHO OFF
 SETLOCAL EnableDelayedExpansion
 
+CD /D %~dp0
 IF EXIST configuration.bat (
 	CALL configuration.bat show-message
 )

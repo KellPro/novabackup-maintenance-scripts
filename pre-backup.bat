@@ -1,10 +1,11 @@
 @ECHO OFF
 SETLOCAL EnableDelayedExpansion
 SET updatePackage=https://github.com/gillsonkell/novabackup-maintenance-scripts/archive/master.zip
-SET updatePackageFolder=novabackup-maintenance-scripts-master
+SET updatePackageDirectory=novabackup-maintenance-scripts-master
 SET vdataLocations="C:\kdr\vdata" "D:\kdr\vdata"
 SET services="Backup Client Agent Service" "swprv" "nsService" "VSS" "SQLBrowser" "SQLWriter"
 
+CD /D %~dp0
 IF EXIST configuration.bat (
 	IF "%1" == "no-update" (
 		CALL configuration.bat
@@ -17,14 +18,14 @@ REM ### Update Scripts ###
 IF NOT "%1" == "no-update" (
 	curl -o update.zip -L -k %updatePackage%
 	unzip update.zip
-	XCOPY .\%updatePackageFolder%\* .\ /C /Q /S /E /H /Y
-    RD /S /Q %updatePackageFolder%
+	XCOPY .\%updatePackageDirectory%\* .\ /C /Q /S /E /H /Y
+    RD /S /Q %updatePackageDirectory%
     DEL update.zip
 	CALL pre-backup.bat no-update
 	EXIT /B
 )
 
-REM ### Empty VDATA Folders ###
+REM ### Empty VDATA Directories ###
 FOR %%f IN (%vdataLocations%) DO (
 	IF EXIST %%f (
 		ECHO Emptying %%f...
